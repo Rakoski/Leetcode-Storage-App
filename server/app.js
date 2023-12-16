@@ -5,9 +5,9 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const graphqlHttp = require('express-graphql')
 
-const graphqlSchema = require('./server/graphql/schema')
-const graphqlResolver = require('./server/graphql/resolvers')
-const auth = require('./server/middleware/auth')
+const graphqlSchema = require('./graphql/schema')
+const graphqlResolver = require('./graphql/resolvers')
+const auth = require('./middleware/auth')
 
 const app = express()
 
