@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import { graphqlHTTP } from 'express-graphql';
 import { buildSchema, GraphQLSchema } from 'graphql';
 
@@ -25,7 +24,14 @@ const schema: GraphQLSchema = buildSchema(`
 
 app.use('/graphql', graphqlHTTP({
     schema,
-    rootValue: {},
+    rootValue: {
+        events: () => {
+            return ['Cooking', 'Cleaning', 'Coding'];
+        },
+        createEvent: (args: { name: string }) => {
+            return args.name;
+        },
+    },
     graphiql: true,
 }));
 
