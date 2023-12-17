@@ -7,13 +7,30 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const events = [];
+
+// ! significa que nunca poderá ser null (not null)
 const schema: GraphQLSchema = buildSchema(`
+  type Event {
+    _id: ID!
+    title: String!
+    price: Float!
+    date: String!
+  }
+  
+  input EventInput {
+    title: String!
+    description: String!
+    price: Float!
+    date: String!
+  }
+
   type RootQuery {
-    events: [String!]!
+    events: [Event!]!
   }
 
   type RootMutation {
-     createEvent(name: String): String
+     createEvent(eventInput: EventInput): Event
   }
 
   schema {
@@ -26,10 +43,17 @@ app.use('/graphql', graphqlHTTP({
     schema,
     rootValue: {
         events: () => {
-            return ['Cooking', 'Cleaning', 'Coding'];
+            return events;
         },
-        createEvent: (args: { name: string }) => {
-            return args.name;
+        createEvent: (args: { title: string; description: string; price: number }) => {
+            const event = {
+                _id: Math.random().toString(),
+                title: args.title,
+                description: args.description,
+                price: +args.price,
+                date: new Date().toISOString()
+            };
+            events.push(event);
         },
     },
     graphiql: true,
