@@ -1,2 +1,2 @@
 # Event-Booking-App
-Project for an event booking app with nodejs, reactjs, graphql and mongodb
+Project for an event booking index with nodejs, reactjs, graphql and mongodb
