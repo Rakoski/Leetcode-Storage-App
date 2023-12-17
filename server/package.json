@@ -10,8 +10,8 @@
     "ts-node": "^10.9.2"
   },
   "scripts": {
-    "build": "npx ts-node src/index.ts",
-    "start": "node src/index.ts"
+    "build": "npx ts-node index.ts",
+    "start": "node index.ts"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
