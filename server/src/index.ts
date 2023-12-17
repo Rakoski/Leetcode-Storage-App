@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 const events = [];
 
-// ! significa que nunca poderá ser null (not null)
+// ! means it will never be able to be null (not null)
 const schema: GraphQLSchema = buildSchema(`
   type Event {
     _id: ID!
