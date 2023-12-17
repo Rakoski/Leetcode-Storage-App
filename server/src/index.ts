@@ -14,6 +14,7 @@ const schema: GraphQLSchema = buildSchema(`
   type Event {
     _id: ID!
     title: String!
+    description: String!
     price: Float!
     date: String!
   }
@@ -45,15 +46,16 @@ app.use('/graphql', graphqlHTTP({
         events: () => {
             return events;
         },
-        createEvent: (args: { title: string; description: string; price: number }) => {
+        createEvent: (args: {eventInput: { title: string; description: string; price: number }}) => {
             const event = {
                 _id: Math.random().toString(),
-                title: args.title,
-                description: args.description,
-                price: +args.price,
+                title: args.eventInput.title,
+                description: args.eventInput.description,
+                price: +args.eventInput.price,
                 date: new Date().toISOString()
             };
             events.push(event);
+            return event;
         },
     },
     graphiql: true,
