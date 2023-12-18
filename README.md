@@ -96,10 +96,11 @@ The server will be running at http://localhost:4000.
 The client will be accessible at http://localhost:3000.
 
 ### Technologies Used
-Node.js
-TypeScript
-React.js
-GraphQL
+Node.js,
+Ts-node,
+TypeScript,
+React.js,
+GraphQL,
 MongoDB
 
 ### Contributing
