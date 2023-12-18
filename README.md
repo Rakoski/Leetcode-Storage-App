@@ -30,19 +30,18 @@ Before you begin, ensure you have the following installed on your machine:
 
 1. Clone the repository:
 
-   ```
-   git clone https://github.com/your-username/event-booking-index.git
+     ```
+     git clone https://github.com/your-username/event-booking-index.git
 2. Navigate to the project directory:
 
 3. Install dependencies for both the server and client:
 
-   ```
+    ```
    cd server
    npm install
 
    cd ../client
    npm install
-   
 ## Project Structure
 The project is organized into two main parts:
 
