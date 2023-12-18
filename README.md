@@ -80,8 +80,6 @@ The project is organized into two main parts:
    
   Start the server:
 
-    ```
-    Copy code
     cd server
     npx ts-node index.ts
     
