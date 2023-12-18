@@ -2,6 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { graphqlHTTP } from 'express-graphql';
 import { buildSchema, GraphQLSchema } from 'graphql';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -61,6 +65,11 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true,
 }));
 
-app.listen(4000, () => {
-    console.log('Server is running on http://localhost:4000/graphql');
+mongoose.connect(process.env.MONGODB_URI )
+    .then(() => {app.listen(4000, () => {
+        console.log('Server is running on http://localhost:4000/graphql');
+    });
+})
+    .catch(err => {
+    console.log("Error in MongoDB connection: ", err);
 });
