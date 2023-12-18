@@ -7,11 +7,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const Event = require('./models/event')
+
 const app = express();
 
 app.use(bodyParser.json());
-
-const events = [];
 
 // ! means it will never be able to be null (not null)
 const schema: GraphQLSchema = buildSchema(`
@@ -48,24 +48,37 @@ app.use('/graphql', graphqlHTTP({
     schema,
     rootValue: {
         events: () => {
-            return events;
+            return event;
         },
-        createEvent: (args: {eventInput: { title: string; description: string; price: number }}) => {
-            const event = {
-                _id: Math.random().toString(),
+        createEvent: (args: {eventInput: { title: string; description: string; price: number; date: string }}) => {
+            // const event = {
+            //     _id: Math.random().toString(),
+            //     title: args.eventInput.title,
+            //     description: args.eventInput.description,
+            //     price: +args.eventInput.price,
+            //     date: new Date().toISOString()
+            // };
+            const event = new Event({
                 title: args.eventInput.title,
                 description: args.eventInput.description,
                 price: +args.eventInput.price,
-                date: new Date().toISOString()
-            };
-            events.push(event);
+                date: new Date(args.eventInput.date)
+            });
+
+            event.save().then((result: { doc: string }) => {
+                console.log("Event saved successfully", { doc: result.doc });
+            }).catch((err: string) => {
+                console.log("Error in saving an event: ", err);
+                throw err
+            });
             return event;
+
         },
     },
     graphiql: true,
 }));
 
-mongoose.connect(process.env.MONGODB_URI )
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {app.listen(4000, () => {
         console.log('Server is running on http://localhost:4000/graphql');
     });
