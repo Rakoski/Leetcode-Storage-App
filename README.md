@@ -49,8 +49,8 @@ The project is organized into two main parts:
 server: Node.js server with GraphQL API and MongoDB database.
 client: React.js client for the front end.
 
-<code>
-event-booking-index/
+
+<code>event-booking-index/
 |-- server/
 |   |-- graphql/
 |   |-- models/
@@ -81,7 +81,7 @@ event-booking-index/
    
   Start the server:
 
-    ```bash
+    ```
     Copy code
     cd server
     npx ts-node index.ts
