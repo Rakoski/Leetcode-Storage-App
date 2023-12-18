@@ -30,13 +30,13 @@ Before you begin, ensure you have the following installed on your machine:
 
 1. Clone the repository:
 
-   ```bash
+   ```
    git clone https://github.com/your-username/event-booking-index.git
 2. Navigate to the project directory:
 
 3. Install dependencies for both the server and client:
 
-   ```bash
+   ```
    cd server
    npm install
 
@@ -46,9 +46,8 @@ Before you begin, ensure you have the following installed on your machine:
 ## Project Structure
 The project is organized into two main parts:
 
-server: Node.js server with GraphQL API and MongoDB database.
-client: React.js client for the front end.
-
+1. server: Node.js server with GraphQL API and MongoDB database.
+2. client: React.js client for the front end.
 
 <code>event-booking-index/
 |-- server/
@@ -77,7 +76,7 @@ client: React.js client for the front end.
 
 1. Update the necessary configuration values in the .env file inside the folder package, such as MongoDB connection details.
 
-3. Running the Application
+2. Running the Application
    
   Start the server:
 
