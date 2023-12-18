@@ -43,7 +43,7 @@ Before you begin, ensure you have the following installed on your machine:
    cd ../client
    npm install
    
-### Project Structure
+## Project Structure
 The project is organized into two main parts:
 
 server: Node.js server with GraphQL API and MongoDB database.
@@ -73,7 +73,7 @@ client: React.js client for the front end.
 |-- README.md
 </code>
 
-### Configuration
+## Configuration
 
 1. Update the necessary configuration values in the .env file inside the folder package, such as MongoDB connection details.
 
@@ -95,7 +95,7 @@ The server will be running at http://localhost:4000.
   
 The client will be accessible at http://localhost:3000.
 
-### Technologies Used
+## Technologies Used
 Node.js,
 Ts-node,
 TypeScript,
