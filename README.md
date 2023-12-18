@@ -1,6 +1,6 @@
 # Event Booking Index
 
-This project is an event booking index built using TypeScript, Node.js, React.js, GraphQL, and MongoDB. It allows users to browse and book events.
+This project is an event booking index built using TypeScript, Node.js, React.js, GraphQL, and MongoDB. It allows users to browse and book events. This is meant as a training project for MongoDB, GraphQL and Typescript.
 
 ## Table of Contents
 
