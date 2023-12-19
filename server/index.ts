@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { graphqlHTTP } from 'express-graphql';
-import { buildSchema, GraphQLSchema } from 'graphql';
+import {graphqlHTTP} from 'express-graphql';
+import {buildSchema, GraphQLSchema} from 'graphql';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -48,7 +48,15 @@ app.use('/graphql', graphqlHTTP({
     schema,
     rootValue: {
         events: () => {
-            return event;
+            return Event.find()
+                .then((events: object[]) => {
+                    return events.map((event: { _doc: any, _id: any }) =>
+                        ({ ...event._doc, _id: event._doc._id.toString() }))
+                })
+                .catch((err: any) => {
+                    console.error("Error fetching events:", err);
+                    throw err;
+                });
         },
         createEvent: (args: {eventInput: { title: string; description: string; price: number; date: string }}) => {
             // const event = {
@@ -65,8 +73,8 @@ app.use('/graphql', graphqlHTTP({
                 date: new Date(args.eventInput.date)
             });
 
-            event.save().then((result: { doc: string }) => {
-                console.log("Event saved successfully", { doc: result.doc });
+            event.save().then((result: { _doc: any }) => {
+                console.log("Event saved successfully", { doc: result._doc, _id: result._doc._id.toString() });
             }).catch((err: string) => {
                 console.log("Error in saving an event: ", err);
                 throw err
