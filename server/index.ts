@@ -23,11 +23,22 @@ const schema: GraphQLSchema = buildSchema(`
     date: String!
   }
   
+  type User {
+    _id: ID!
+    email: String!
+    password: String
+  }
+  
   input EventInput {
     title: String!
     description: String!
     price: Float!
     date: String!
+  }
+  
+  input UserInput {
+    email: String!
+    password: String!
   }
 
   type RootQuery {
@@ -36,6 +47,7 @@ const schema: GraphQLSchema = buildSchema(`
 
   type RootMutation {
      createEvent(eventInput: EventInput): Event
+     createUser(userInput: UserInput): User
   }
 
   schema {
@@ -61,13 +73,6 @@ app.use('/graphql', graphqlHTTP({
         createEvent: (args: {eventInput:
                 { title: string; description: string; price: number; date: string }
         }) => {
-            // const event = {
-            //     _id: Math.random().toString(),
-            //     title: args.eventInput.title,
-            //     description: args.eventInput.description,
-            //     price: +args.eventInput.price,
-            //     date: new Date().toISOString()
-            // };
             const event = new Event({
                 title: args.eventInput.title,
                 description: args.eventInput.description,
