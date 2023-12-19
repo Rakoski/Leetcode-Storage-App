@@ -50,7 +50,7 @@ app.use('/graphql', graphqlHTTP({
         events: () => {
             return Event.find()
                 .then((events: object[]) => {
-                    return events.map((event: { _doc: any, _id: any }) =>
+                    return events.map((event: { _doc: { _id: string }, _id: string }) =>
                         ({ ...event._doc, _id: event._doc._id.toString() }))
                 })
                 .catch((err: any) => {
