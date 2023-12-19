@@ -58,7 +58,9 @@ app.use('/graphql', graphqlHTTP({
                     throw err;
                 });
         },
-        createEvent: (args: {eventInput: { title: string; description: string; price: number; date: string }}) => {
+        createEvent: (args: {eventInput:
+                { title: string; description: string; price: number; date: string }
+        }) => {
             // const event = {
             //     _id: Math.random().toString(),
             //     title: args.eventInput.title,
@@ -73,8 +75,9 @@ app.use('/graphql', graphqlHTTP({
                 date: new Date(args.eventInput.date)
             });
 
-            event.save().then((result: { _doc: any }) => {
-                console.log("Event saved successfully", { doc: result._doc, _id: result._doc._id.toString() });
+            event.save().then((result: { _doc: { _id: string } }) => {
+                console.log("Event saved successfully",
+                    { doc: result._doc, _id: result._doc._id.toString() });
             }).catch((err: string) => {
                 console.log("Error in saving an event: ", err);
                 throw err
