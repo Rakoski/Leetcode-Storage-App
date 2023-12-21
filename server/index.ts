@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const Event = require('./models/event')
+const Event = require('./models/problem')
 
 const app = express();
 
@@ -15,11 +15,14 @@ app.use(bodyParser.json());
 
 // ! means it will never be able to be null (not null)
 const schema: GraphQLSchema = buildSchema(`
-  type Event {
+  type Problem {
     _id: ID!
     title: String!
+    level: String!
     description: String!
-    price: Float!
+    frequency: Float!
+    link: String!
+    data_structure: String!
     date: String!
   }
   
@@ -29,10 +32,13 @@ const schema: GraphQLSchema = buildSchema(`
     password: String
   }
   
-  input EventInput {
+  input ProblemInput {
     title: String!
+    level: String!
     description: String!
-    price: Float!
+    frequency: Float!
+    link: String!
+    data_structure: String!
     date: String!
   }
   
@@ -46,7 +52,7 @@ const schema: GraphQLSchema = buildSchema(`
   }
 
   type RootMutation {
-     createEvent(eventInput: EventInput): Event
+     createEvent(problemInput: ProblemInput): Problem
      createUser(userInput: UserInput): User
   }
 
