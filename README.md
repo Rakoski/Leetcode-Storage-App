@@ -1,6 +1,6 @@
-# Event Booking Index
+# Leetcode Storage App
 
-This project is an event booking index built using TypeScript, Node.js, React.js, GraphQL, and MongoDB. It allows users to browse and book events. This is meant as a training project for MongoDB, GraphQL and Typescript.
+This project is a leetcode problem storage web app built using TypeScript, Node.js, React.js, GraphQL, and MongoDB. It allows users to store and organize their leetcode problems they have solved. This is meant as a training project for MongoDB, GraphQL and Typescript.
 
 ## Table of Contents
 
@@ -31,7 +31,7 @@ Before you begin, ensure you have the following installed on your machine:
 1. Clone the repository:
 
      ```
-     git clone https://github.com/your-username/event-booking-index.git
+     git clone https://github.com/your-username/Leetcode-Storage-App.git
 2. Navigate to the project directory:
 
 3. Install dependencies for both the server and client:
