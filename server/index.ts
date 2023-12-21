@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const Event = require('./models/problem')
+const Problem = require('./models/problem')
 
 const app = express();
 
@@ -65,35 +65,42 @@ const schema: GraphQLSchema = buildSchema(`
 app.use('/graphql', graphqlHTTP({
     schema,
     rootValue: {
-        events: () => {
-            return Event.find()
-                .then((events: object[]) => {
-                    return events.map((event: { _doc: { _id: string }, _id: string }) =>
-                        ({ ...event._doc, _id: event._doc._id.toString() }))
+        problems: () => {
+            return Problem.find()
+                .then((problems: object[]) => {
+                    return problems.map((problem: { _doc: { _id: string }, _id: string }) =>
+                        ({ ...problem._doc, _id: problem._doc._id.toString() }))
                 })
                 .catch((err: any) => {
-                    console.error("Error fetching events:", err);
+                    console.error("Error fetching problems:", err);
                     throw err;
                 });
         },
-        createEvent: (args: {eventInput:
-                { title: string; description: string; price: number; date: string }
+        createProblem: (args: {problemInput:
+                { title: string; description: string; level: string; frequency: number; link: string;
+                    data_structure: string; date: string }
         }) => {
-            const event = new Event({
-                title: args.eventInput.title,
-                description: args.eventInput.description,
-                price: +args.eventInput.price,
-                date: new Date(args.eventInput.date)
+            const { title, description, level, frequency, link,
+                data_structure, date } = args.problemInput;
+
+            const problem = new Problem({
+                title,
+                description,
+                level,
+                frequency,
+                link,
+                data_structure,
+                date: new Date(date),
             });
 
-            event.save().then((result: { _doc: { _id: string } }) => {
-                console.log("Event saved successfully",
+            problem.save().then((result: { _doc: { _id: string } }) => {
+                console.log("Problem saved successfully",
                     { doc: result._doc, _id: result._doc._id.toString() });
             }).catch((err: string) => {
                 console.log("Error in saving an event: ", err);
                 throw err
             });
-            return event;
+            return problem;
 
         },
     },
