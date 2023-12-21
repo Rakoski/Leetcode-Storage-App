@@ -48,11 +48,11 @@ const schema: GraphQLSchema = buildSchema(`
   }
 
   type RootQuery {
-    events: [Event!]!
+    problems: [Problem!]!
   }
 
   type RootMutation {
-     createEvent(problemInput: ProblemInput): Problem
+     createProblem(problemInput: ProblemInput): Problem
      createUser(userInput: UserInput): User
   }
 
@@ -97,7 +97,7 @@ app.use('/graphql', graphqlHTTP({
                 console.log("Problem saved successfully",
                     { doc: result._doc, _id: result._doc._id.toString() });
             }).catch((err: string) => {
-                console.log("Error in saving an event: ", err);
+                console.log("Error in saving an problem: ", err);
                 throw err
             });
             return problem;

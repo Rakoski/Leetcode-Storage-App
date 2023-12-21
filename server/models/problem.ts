@@ -8,12 +8,12 @@ const problemSchema = new Schema({
         required: true
     },
     level: {
-        type: Number,
+        type: String,
         required: true
     },
     description: {
         type: String,
-            required: true
+        required: true
     },
     frequency: {
         type: Number,
