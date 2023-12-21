@@ -91,6 +91,55 @@ The server will be running at http://localhost:4000.
   
 The client will be accessible at http://localhost:3000.
 
+## API Documentation
+
+### GraphQL Endpoint
+
+The GraphQL API is accessible at:
+
+- **Endpoint:** http://localhost:4000/graphql
+
+Use this endpoint to interact with the Leetcode Storage App GraphQL API. You can make queries and mutations to manage your leetcode problems.
+
+### Example Mutation
+
+To create a new problem, you can use the following example mutation:
+
+    mutation {
+      createProblem(problemInput: {
+        title: "Two Sum"
+        level: "Easy"
+        description: "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order."
+        frequency: 5
+        link: "https://leetcode.com/problems/two-sum/"
+        data_structure: "Array"
+        date: "2023-12-31T00:00:00.000Z"
+      }) {
+        _id
+        title
+        level
+        description
+        frequency
+        link
+        data_structure
+        date
+      }
+    }
+
+    query {
+        problems {
+            _id
+            title
+            level
+            description
+            frequency
+            link
+            data_structure
+            date
+        }
+    }
+
+
 ## Technologies Used
 Node.js,
 Ts-node,
