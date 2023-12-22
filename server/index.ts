@@ -4,10 +4,12 @@ import {graphqlHTTP} from 'express-graphql';
 import {buildSchema, GraphQLSchema} from 'graphql';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
 const Problem = require('./models/problem')
+const User = require('./models/user')
 
 const app = express();
 
@@ -76,32 +78,76 @@ app.use('/graphql', graphqlHTTP({
                     throw err;
                 });
         },
-        createProblem: (args: {problemInput:
-                { title: string; description: string; level: string; frequency: number; link: string;
-                    data_structure: string; date: string }
-        }) => {
-            const { title, description, level, frequency, link,
-                data_structure, date } = args.problemInput;
+        createProblem: async (args: { problemInput: { title: string; description: string; level: string; frequency: number; link: string; data_structure: string; date: string } }) => {
+            try {
+                const { title, description, level, frequency, link, data_structure, date } = args.problemInput;
 
-            const problem = new Problem({
-                title,
-                description,
-                level,
-                frequency,
-                link,
-                data_structure,
-                date: new Date(date),
-            });
+                const problem = new Problem({
+                    title,
+                    description,
+                    level,
+                    frequency,
+                    link,
+                    data_structure,
+                    date: new Date(date),
+                    creator: '658551a1b92599c7aedb9bd4',
+                });
 
-            problem.save().then((result: { _doc: { _id: string } }) => {
-                console.log("Problem saved successfully",
-                    { doc: result._doc, _id: result._doc._id.toString() });
-            }).catch((err: string) => {
-                console.log("Error in saving an problem: ", err);
-                throw err
-            });
-            return problem;
+                const result = await problem.save();
+                const user = await User.findById('658551a1b92599c7aedb9bd4');
 
+                if (!user) {
+                    throw new Error("User doesn't exist")
+                }
+
+                console.log("Problem saved successfully", { doc: result._doc, _id: result._doc._id.toString() });
+
+                return {
+                    _id: result._doc._id.toString(),
+                    title: result._doc.title,
+                    level: result._doc.level,
+                    description: result._doc.description,
+                    frequency: result._doc.frequency,
+                    link: result._doc.link,
+                    data_structure: result._doc.data_structure,
+                    date: result._doc.date.toISOString(),
+                    creator: user
+                };
+            } catch (err) {
+                console.log("Error in saving a problem: ", err);
+                throw err;
+            }
+        },
+        createUser: async (args: {userInput: {email: string; password: string}}) => {
+            try {
+                const existingUser = await User.findOne({email: args.userInput.email});
+
+                if (existingUser) {
+                    return {
+                        error: {
+                            message: "User already exists!",
+                            code: 'USER_ALREADY_EXISTS',
+                        },
+                    };
+                }
+
+                const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
+                const user = new User({
+                    email: args.userInput.email,
+                    password: hashedPassword
+                });
+                const result = await user.save();
+
+                return {...result._doc, _id: result.id, password: null };
+            } catch (err) {
+                console.log("Error in createUser resolver: ", err);
+                return {
+                    error: {
+                        message: "Error in creating user",
+                        code: 'CREATE_USER_ERROR',
+                    },
+                };
+            }
         },
     },
     graphiql: true,

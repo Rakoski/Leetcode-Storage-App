@@ -10,13 +10,14 @@
     "ts-node": "^10.9.2"
   },
   "scripts": {
-    "build": "npx ts-node index.ts"
+    "run": "npx ts-node index.ts"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
     "@types/express": "^4.17.21",
     "@types/graphql": "^14.5.0",
     "@types/node": "^20.10.4",
+    "bcryptjs": "^2.4.3",
     "mongoose": "^8.0.3",
     "nodemon": "^3.0.2",
     "typescript": "^5.3.3"
